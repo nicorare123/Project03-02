@@ -47,8 +47,12 @@ public class Player : MonoBehaviour
     {
         rigid.MovePosition(rigid.position + moveVec * Time.deltaTime * speed);
     }
-    void LateUpdate()
+    
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            Debug.Log("Trap triggered");
+        }
     }
 }

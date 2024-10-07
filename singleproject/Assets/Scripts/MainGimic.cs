@@ -18,6 +18,7 @@ public class MainGimic : MonoBehaviour
     {
         traps = GameObject.FindGameObjectsWithTag("Trap");
         SetOverlayAlpha(0f);
+        UpdateTraps();
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class MainGimic : MonoBehaviour
     {
         isLightOn = !isLightOn;
         StartCoroutine(FadeToDarkness(isLightOn ? 0f : 0.98f));
+        UpdateTraps();
     }
 
     IEnumerator FadeToDarkness(float targetAlpha)
@@ -60,5 +62,18 @@ public class MainGimic : MonoBehaviour
         Color color = darkness.color;
         color.a = alpha;
         darkness.color = color;
+    }
+
+    void UpdateTraps()
+    {
+        foreach(GameObject trap in traps)
+        {
+            Trap trapScript = trap.GetComponent<Trap>();
+
+            if(trapScript != null)
+            {
+                trapScript.UpdateTrapState(isLightOn);
+            }
+        }
     }
 }

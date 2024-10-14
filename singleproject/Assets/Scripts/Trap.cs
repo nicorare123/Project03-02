@@ -14,6 +14,8 @@ public class Trap : MonoBehaviour
     {
         trapRenderer = GetComponent<Renderer>();
         trapCollider = GetComponent<Collider2D>();
+
+        UpdateTrapState(GameObject.FindObjectOfType<MainGimic>().IsLightOn());
     }
 
     public void UpdateTrapState(bool isLightOn)

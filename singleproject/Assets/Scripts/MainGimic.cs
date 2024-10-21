@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class MainGimic : MonoBehaviour
 {
     public Image darkness;
-    public Camera mainCamera;
-    public Camera additionalCamera;
     public Transform player;
     private GameObject[] traps;
 
@@ -22,8 +20,6 @@ public class MainGimic : MonoBehaviour
         SetOverlayAlpha(0f);
         UpdateTraps();
 
-        additionalCamera.enabled = false;
-        additionalCamera.cullingMask = (1 << LayerMask.NameToLayer("PlayerNLights")) | (1 << LayerMask.NameToLayer("DarkTrap"));
     }
 
     // Update is called once per frame
@@ -38,10 +34,9 @@ public class MainGimic : MonoBehaviour
     void ToggleLight()
     {
         isLightOn = !isLightOn;
-        StartCoroutine(FadeToDarkness(isLightOn ? 0f : 1f));
+        StartCoroutine(FadeToDarkness(isLightOn ? 0f : 0.99f));
         UpdateTraps();
 
-        additionalCamera.enabled = !isLightOn;
     }
 
     IEnumerator FadeToDarkness(float targetAlpha)

@@ -291,7 +291,7 @@ Transform:
   m_GameObject: {fileID: 374815430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59, y: 2.73, z: 0}
+  m_LocalPosition: {x: -35.33, y: 2.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -371,13 +371,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb226bdb2794984897adcb373ed2609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 20
+  height: 20
   wallPrefab: {fileID: 1706712800}
-  floorPrefab: {fileID: 1173109874}
-  trapPrefabs:
-  - {fileID: 374815430}
+  pathPrefab: {fileID: 1173109874}
+  lightTrapPrefabs:
   - {fileID: 1237872797}
+  darkTrapPrefabs:
+  - {fileID: 374815430}
   trapSpawnRate: 0.1
 --- !u!4 &470641944
 Transform:
@@ -911,7 +912,7 @@ Transform:
   m_GameObject: {fileID: 1173109874}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.0046685, y: -7.333695, z: 0}
+  m_LocalPosition: {x: -32.49, y: 2.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1010,7 +1011,7 @@ Transform:
   m_GameObject: {fileID: 1237872797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.62, y: 0.57, z: 0}
+  m_LocalPosition: {x: -35.31, y: 4.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1206,7 +1207,7 @@ Transform:
   m_GameObject: {fileID: 1706712800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -11.54, z: 0}
+  m_LocalPosition: {x: -32.46, y: 4.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1285,7 +1286,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_FlipX: 0
@@ -1306,8 +1307,8 @@ Transform:
   m_GameObject: {fileID: 1833403588}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 519420032}
@@ -1507,9 +1508,9 @@ SceneRoots:
   - {fileID: 1029170432}
   - {fileID: 1972178930}
   - {fileID: 2029491132}
-  - {fileID: 1237872800}
-  - {fileID: 374815433}
   - {fileID: 1293029750}
   - {fileID: 1706712803}
   - {fileID: 1173109876}
   - {fileID: 470641944}
+  - {fileID: 1237872800}
+  - {fileID: 374815433}

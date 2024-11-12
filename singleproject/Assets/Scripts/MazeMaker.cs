@@ -10,24 +10,40 @@ public class MazeGenerator : MonoBehaviour
     public GameObject pathPrefab;
     public GameObject[] lightTrapPrefabs;
     public GameObject[] darkTrapPrefabs;
+    public GameObject batteryPrefab;
+    public GameObject exitPrefab;
 
     public float trapSpawnRate = 0.1f;
 
     private int[,] maze;
-    private Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+    private Vector2Int startPosition;
+    private Vector2Int exitPosition;
+    private List<Vector2Int> pathPositions = new List<Vector2Int>();
+
+    private readonly Vector2Int[] directions = new Vector2Int[]
+    {
+        Vector2Int.up,
+        Vector2Int.down,
+        Vector2Int.left,
+        Vector2Int.right
+    };
+
 
     void Start()
     {
         GenerateMaze();
         RenderMaze();
         PlaceTraps();
+        PlaceBatteries(4);
+        PlaceExit();
     }
 
     void GenerateMaze()
     {
+        startPosition = new Vector2Int(1, 1);
+        exitPosition = new Vector2Int(width - 2, height - 2);
         maze = new int[width, height];
 
-        // 외곽 벽 설정
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -36,7 +52,6 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        // 시작점부터 깊이 우선 탐색 방식으로 경로 생성
         Stack<Vector2Int> stack = new Stack<Vector2Int>();
         Vector2Int start = new Vector2Int(1, 1);
         maze[start.x, start.y] = 1;
@@ -59,14 +74,17 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        // 길이 아닌 모든 곳을 벽으로 채움
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 if (maze[x, y] == -1)
                 {
-                    maze[x, y] = 0; // 벽으로 설정
+                    maze[x, y] = 0;
+                }
+                else if (maze[x, y] == 1)
+                {
+                    pathPositions.Add(new Vector2Int(x, y));
                 }
             }
         }
@@ -97,7 +115,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 1; y < height - 1; y++)
             {
-                if (maze[x, y] == 1 && Random.value < trapSpawnRate)
+                if (maze[x, y] == 1 && Random.value < trapSpawnRate && !HasAdjacentTrap(x, y))
                 {
                     Vector3 position = new Vector3(x, y, 0);
 
@@ -119,6 +137,20 @@ public class MazeGenerator : MonoBehaviour
             }
         }
     }
+    bool HasAdjacentTrap(int x, int y)
+    {
+        foreach (Vector2Int dir in directions)
+        {
+            int nx = x + dir.x;
+            int ny = y + dir.y;
+            if (nx < 0 || nx >= width || ny < 0 || ny >= height)
+                continue;
+            if (maze[nx, ny] == 3)
+                return true;
+        }
+        return false;
+    }
+
 
     List<Vector2Int> GetUnvisitedNeighbors(Vector2Int cell)
     {
@@ -135,5 +167,29 @@ public class MazeGenerator : MonoBehaviour
         }
 
         return neighbors;
+    }
+    void PlaceBatteries(int count)
+    {
+        int placed = 0;
+        int maxAttempts = 100; 
+        while (placed < count && maxAttempts > 0)
+        {
+            maxAttempts--;
+            Vector2Int randomPosition = pathPositions[Random.Range(0, pathPositions.Count)];
+            if (maze[randomPosition.x, randomPosition.y] == 1)
+            {
+                Instantiate(batteryPrefab, new Vector3(randomPosition.x, randomPosition.y, 0), Quaternion.identity);
+                maze[randomPosition.x, randomPosition.y] = 2;
+                placed++;
+            }
+        }
+    }
+
+    void PlaceExit()
+    {
+        if (maze[exitPosition.x, exitPosition.y] == 1)
+        {
+            Instantiate(exitPrefab, new Vector3(exitPosition.x, exitPosition.y, 0), Quaternion.identity);
+        }
     }
 }

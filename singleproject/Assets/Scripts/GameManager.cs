@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject titleUI;       
+    public GameObject difficultyUI;
+    public GameObject gameUI;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        titleUI.SetActive(true);       
+        difficultyUI.SetActive(false); 
+        gameUI.SetActive(false);
+    }
+    public void ShowDifficultySelection()
+    {
+        titleUI.SetActive(false);
+        difficultyUI.SetActive(true);
+        Debug.Log("Start Button Clicked!");
+    }
+    public void StartGame()
+    {
+        difficultyUI.SetActive(false);
+        gameUI.SetActive(true);
     }
 }

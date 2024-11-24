@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
             if (hp <= 0)
             {
                 Debug.Log("Game Over");
-                // 게임 오버 로직 추가
+               
             }
         }
         else if (collision.gameObject.CompareTag("Battery"))
@@ -75,10 +75,17 @@ public class Player : MonoBehaviour
                 Debug.Log("모든 배터리 수집 완료! 탈출구로 이동하세요.");
             }
         }
-        else if (collision.gameObject.CompareTag("Exit") && batteryCount == 4)
+        else if (collision.gameObject.CompareTag("Exit"))
         {
-            Debug.Log("탈출 성공!");
-            // 게임 클리어 로직 추가
+            if (batteryCount == 4)
+            {
+                Debug.Log("탈출 성공! 게임 클리어!");
+                FindObjectOfType<GameManager>().GameClear();
+            }
+            else
+            {
+                Debug.Log("배터리를 모두 모아야 탈출할 수 있습니다.");
+            }
         }
     }
     void UpdateHpUI()

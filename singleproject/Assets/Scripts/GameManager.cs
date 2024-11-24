@@ -1,26 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject titleUI;       
-    public GameObject difficultyUI;
-    public GameObject gameUI;
+    public GameObject gameClearUI;
 
-    private void Start()
+    public void GameClear()
     {
-        titleUI.SetActive(true);       
-        difficultyUI.SetActive(false); 
-        gameUI.SetActive(false);
+        Time.timeScale = 0f; 
+        gameClearUI.SetActive(true); 
+        Debug.Log("게임 클리어!");
     }
-    public void ShowDifficultySelection()
+
+    public void RestartGame()
     {
-        titleUI.SetActive(false);
-        difficultyUI.SetActive(true);
-        Debug.Log("Start Button Clicked!");
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
     }
-    public void StartGame()
+
+    public void ReturnToMenu()
     {
-        difficultyUI.SetActive(false);
-        gameUI.SetActive(true);
+        Debug.Log("게임 종료!");
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    public int width = 10;
-    public int height = 10;
+    
     public GameObject wallPrefab;
     public GameObject pathPrefab;
     public GameObject[] lightTrapPrefabs;
@@ -19,6 +18,8 @@ public class MazeGenerator : MonoBehaviour
     private Vector2Int startPosition;
     private Vector2Int exitPosition;
     private List<Vector2Int> pathPositions = new List<Vector2Int>();
+    private int width;
+    private int height;
 
     private readonly Vector2Int[] directions = new Vector2Int[]
     {
@@ -31,14 +32,23 @@ public class MazeGenerator : MonoBehaviour
 
     void Start()
     {
-        GenerateMaze();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "GameScene")
+        {
+            return;
+        }
+        width = PlayerPrefs.GetInt("MazeWidth", 21);
+        height = PlayerPrefs.GetInt("MazeHeight", 21);
+
+        GenerateMaze(width, height);;
         RenderMaze();
         PlaceTraps();
         PlaceBatteries(4);
         PlaceExit();
+
+        
     }
 
-    void GenerateMaze()
+    void GenerateMaze(int width, int height)
     {
         startPosition = new Vector2Int(1, 1);
         exitPosition = new Vector2Int(width - 2, height - 2);
@@ -115,8 +125,13 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 1; y < height - 1; y++)
             {
+                
                 if (maze[x, y] == 1 && Random.value < trapSpawnRate && !HasAdjacentTrap(x, y))
                 {
+                    
+                    if (maze[x, y] == 2)
+                        continue;
+
                     Vector3 position = new Vector3(x, y, 0);
 
                     bool isLightTrap = Random.value > 0.5f;
@@ -132,11 +147,15 @@ public class MazeGenerator : MonoBehaviour
                         {
                             trapScript.isLightTrap = isLightTrap;
                         }
+
+                        
+                        maze[x, y] = 3;
                     }
                 }
             }
         }
     }
+
     bool HasAdjacentTrap(int x, int y)
     {
         foreach (Vector2Int dir in directions)
@@ -145,11 +164,13 @@ public class MazeGenerator : MonoBehaviour
             int ny = y + dir.y;
             if (nx < 0 || nx >= width || ny < 0 || ny >= height)
                 continue;
+
             if (maze[nx, ny] == 3)
                 return true;
         }
         return false;
     }
+
 
 
     List<Vector2Int> GetUnvisitedNeighbors(Vector2Int cell)
@@ -171,12 +192,14 @@ public class MazeGenerator : MonoBehaviour
     void PlaceBatteries(int count)
     {
         int placed = 0;
-        int maxAttempts = 100; 
+        int maxAttempts = 100;
         while (placed < count && maxAttempts > 0)
         {
             maxAttempts--;
             Vector2Int randomPosition = pathPositions[Random.Range(0, pathPositions.Count)];
-            if (maze[randomPosition.x, randomPosition.y] == 1)
+
+            
+            if (maze[randomPosition.x, randomPosition.y] == 1 && !HasAdjacentTrap(randomPosition.x, randomPosition.y))
             {
                 Instantiate(batteryPrefab, new Vector3(randomPosition.x, randomPosition.y, 0), Quaternion.identity);
                 maze[randomPosition.x, randomPosition.y] = 2;
@@ -184,6 +207,7 @@ public class MazeGenerator : MonoBehaviour
             }
         }
     }
+
 
     void PlaceExit()
     {

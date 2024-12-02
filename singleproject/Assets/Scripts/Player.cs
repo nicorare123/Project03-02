@@ -17,11 +17,13 @@ public class Player : MonoBehaviour
     bool isHorizontal;
     Vector2 moveVec;
     Vector3 dirVec;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -46,6 +48,10 @@ public class Player : MonoBehaviour
         {
             dirVec = moveVec;
         }
+        int hDirection = (int)h;
+        int vDirection = (int)v;
+        anim.SetInteger("hAxisRaw", hDirection);
+        anim.SetInteger("vAxisRaw", vDirection);
     }
 
     void FixedUpdate()

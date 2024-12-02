@@ -60,7 +60,7 @@ public class TitleScreen : MonoBehaviour
         PlayerPrefs.SetInt("MazeHeight", mazeHeight);
     }
     public void StartGame()
-    {
+    {       
         SceneManager.LoadScene("GameScene");
     }
 }

@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject gameClearUI;
+    public Text gameOverText;
 
+    
     public void GameClear()
     {
         Time.timeScale = 0f; 
         gameClearUI.SetActive(true); 
         Debug.Log("게임 클리어!");
     }
-
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameClearUI.SetActive(true);
+        gameOverText.text = "GAMEOVER"; 
+    }
     public void RestartGame()
     {
         Time.timeScale = 1f;
@@ -31,12 +40,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Time.timeScale = 1f;
     }
 }

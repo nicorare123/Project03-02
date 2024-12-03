@@ -67,8 +67,7 @@ public class Player : MonoBehaviour
             UpdateHpUI();
             if (hp <= 0)
             {
-                Debug.Log("Game Over");
-               
+                FindObjectOfType<GameManager>().GameOver();
             }
         }
         else if (collision.gameObject.CompareTag("Battery"))

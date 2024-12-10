@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class TitleScreen : MonoBehaviour
 {
     public GameObject titleName;
+    public GameObject titleName2;
     public GameObject startButton;
     public GameObject difficultyText;
     public GameObject easyButton, normalButton, hardButton;
@@ -26,6 +27,7 @@ public class TitleScreen : MonoBehaviour
     {
         
         titleName.SetActive(false);
+        titleName2.SetActive(false);
         startButton.SetActive(false);
 
         difficultyText.SetActive(true);

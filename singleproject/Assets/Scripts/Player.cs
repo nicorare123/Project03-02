@@ -17,13 +17,12 @@ public class Player : MonoBehaviour
     bool isHorizontal;
     Vector2 moveVec;
     Vector3 dirVec;
-    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -34,7 +33,7 @@ public class Player : MonoBehaviour
 
         Vector2 InputVec = new Vector2(h, v);
 
-        if(InputVec.magnitude > 1)
+        if (InputVec.magnitude > 1)
         {
             return;
         }
@@ -44,14 +43,13 @@ public class Player : MonoBehaviour
 
         bool hButton = Input.GetButton("Horizontal");
         bool vButton = Input.GetButton("Vertical");
-        if(hButton || vButton)
+        if (hButton || vButton)
         {
             dirVec = moveVec;
         }
         int hDirection = (int)h;
         int vDirection = (int)v;
-        anim.SetInteger("hAxisRaw", hDirection);
-        anim.SetInteger("vAxisRaw", vDirection);
+
     }
 
     void FixedUpdate()
